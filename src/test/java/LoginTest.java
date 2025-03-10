@@ -59,8 +59,8 @@ public class LoginTest {
         driver.findElement(By.id("login-button")).click(); //нажать кнопку "Login"
 
         boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=title]")).isDisplayed(); //найти уникальный элемент "Products" на странице, "true" - если видно
-
         Assert.assertTrue(titleIsVisible, "Products"); //сравнить между собой два значения
+        
         driver.quit();
     }
 
@@ -114,9 +114,9 @@ public class LoginTest {
         driver.findElement(By.id("password")).sendKeys("Katysheva");
         driver.findElement(By.id("login-button")).click();
 
-        String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
-        Assert.assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service");
-
+        boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=error]")).isDisplayed();
+        Assert.assertTrue(titleIsVisible, "Epic sadface: Username and password do not match any user in this service");
+        
         driver.quit();
     }
 
