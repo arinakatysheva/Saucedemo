@@ -46,20 +46,20 @@ public class LoginTest {
        Epic sadface: Password is required
      */
 
-    @Test // аннотация
+    @Test 
     public void checkPositiveLogin() {
-        WebDriver driver = new ChromeDriver(); //инициализация браузера (Chrome)
-        driver.manage().window().maximize(); //настройки браузера (максимальный размер открывающегося окна)
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //неявное ожидание (10 секунд на появление элемента на странице)
+        WebDriver driver = new ChromeDriver(); 
+        driver.manage().window().maximize(); 
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); 
 
-        driver.get("https://www.saucedemo.com"); //получить страницу
+        driver.get("https://www.saucedemo.com");
 
-        driver.findElement(By.id("user-name")).sendKeys("standard_user"); //ввести логин (локатор id из xtml-файла)
-        driver.findElement(By.id("password")).sendKeys("secret_sauce"); //ввести пароль
-        driver.findElement(By.id("login-button")).click(); //нажать кнопку "Login"
+        driver.findElement(By.id("user-name")).sendKeys("standard_user"); 
+        driver.findElement(By.id("password")).sendKeys("secret_sauce"); 
+        driver.findElement(By.id("login-button")).click(); 
 
-        boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=title]")).isDisplayed(); //найти уникальный элемент "Products" на странице, "true" - если видно
-        Assert.assertTrue(titleIsVisible, "Products"); //сравнить между собой два значения
+        boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=title]")).isDisplayed(); 
+        Assert.assertTrue(titleIsVisible, "Products"); 
         
         driver.quit();
     }
