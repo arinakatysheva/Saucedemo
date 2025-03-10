@@ -58,7 +58,7 @@ public class LoginTest {
         driver.findElement(By.id("password")).sendKeys("secret_sauce"); 
         driver.findElement(By.id("login-button")).click(); 
 
-        boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=title]")).isDisplayed(); 
+        boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=title]")).isDisplayed(); //найти уникальный элемент "Products" на странице, "true" - если видно
         Assert.assertTrue(titleIsVisible, "Products"); 
         
         driver.quit();
