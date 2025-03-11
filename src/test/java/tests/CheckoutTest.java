@@ -30,5 +30,4 @@ public class CheckoutTest extends BaseTest{
         Assert.assertEquals(completePage.getCompleteMessage(), "Thank you for your order!");
         //название товара, который хотим добавить в корзину
     }
-
 }
