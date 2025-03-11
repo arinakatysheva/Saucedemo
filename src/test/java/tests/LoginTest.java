@@ -1,10 +1,16 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 public class LoginTest extends BaseTest {
+    private static final Logger log = LoggerFactory.getLogger(LoginTest.class);
 
     /*
     Негативный тест:
@@ -18,9 +24,9 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void checkNegativeLoginDesigned() { //использование паттерна Page Object
-        loginPage.open();
-        loginPage.login("standard_user", " ");
-        Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username and password do not match any user in this service");
+        loginPage.open()
+                .loginForNegativeData("standard_user", " ");
+        assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username and password do not match any user in this service");
     }
 
     @Test // аннотация
@@ -33,7 +39,7 @@ public class LoginTest extends BaseTest {
         driver.findElement(By.id("login-button")).click(); //нажать кнопку "Login"
 
         String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText(); //вывести сообщение об ошибке
-        Assert.assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service"); //сравнить между собой два значения
+        assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service"); //сравнить между собой два значения
     }
 
     /*
@@ -47,10 +53,10 @@ public class LoginTest extends BaseTest {
      */
 
     @Test
-    public void checkPositiveLoginDesigned() { //использование паттерна Page Object
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        Assert.assertTrue(productsPage.isPageOpened());
+    public void checkPositiveLoginDesigned() {
+        loginPage.open()
+                .login("standard_user", "secret_sauce");
+        assertTrue(productsPage.isPageOpened());
     }
 
     @Test
@@ -62,7 +68,7 @@ public class LoginTest extends BaseTest {
         driver.findElement(By.id("login-button")).click();
 
         boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=title]")).isDisplayed(); //найти уникальный элемент "Products" на странице, "true" - если видно
-        Assert.assertTrue(titleIsVisible, "Products");
+        assertTrue(titleIsVisible, "Products");
     }
 
     /*
@@ -84,7 +90,7 @@ public class LoginTest extends BaseTest {
         driver.findElement(By.id("login-button")).click();
 
         String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
-        Assert.assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service");
+        assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service");
     }
 
     /*
@@ -106,7 +112,7 @@ public class LoginTest extends BaseTest {
         driver.findElement(By.id("login-button")).click();
 
         boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=error]")).isDisplayed();
-        Assert.assertTrue(titleIsVisible, "Epic sadface: Username and password do not match any user in this service");
+        assertTrue(titleIsVisible, "Epic sadface: Username and password do not match any user in this service");
     }
 
 /*
@@ -128,6 +134,6 @@ public class LoginTest extends BaseTest {
         driver.findElement(By.id("login-button")).click();
 
         String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
-        Assert.assertEquals(errorMessage, "Epic sadface: Password is required");
+        assertEquals(errorMessage, "Epic sadface: Password is required");
     }
 }
