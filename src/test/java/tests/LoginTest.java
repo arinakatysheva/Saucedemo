@@ -1,12 +1,10 @@
+package tests;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-
-public class LoginTest {
+public class LoginTest extends BaseTest {
 
     /*
     Негативный тест:
@@ -18,11 +16,15 @@ public class LoginTest {
        Epic sadface: Username and password do not match any user in this service
      */
 
+    @Test
+    public void checkNegativeLoginDesigned() { //использование паттерна Page Object
+        loginPage.open();
+        loginPage.login("standard_user", " ");
+        Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username and password do not match any user in this service");
+    }
+
     @Test // аннотация
     public void checkNegativeLogin() {
-        WebDriver driver = new ChromeDriver(); //инициализация браузера (Chrome)
-        driver.manage().window().maximize(); //настройки браузера (максимальный размер открывающегося окна)
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //неявное ожидание (10 секунд на появление элемента на странице)
 
         driver.get("https://www.saucedemo.com"); //получить страницу
 
@@ -32,8 +34,6 @@ public class LoginTest {
 
         String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText(); //вывести сообщение об ошибке
         Assert.assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service"); //сравнить между собой два значения
-
-        driver.quit();
     }
 
     /*
@@ -46,22 +46,23 @@ public class LoginTest {
        Epic sadface: Password is required
      */
 
-    @Test // аннотация
+    @Test
+    public void checkPositiveLoginDesigned() { //использование паттерна Page Object
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
+        Assert.assertTrue(productsPage.isPageOpened());
+    }
+
+    @Test
     public void checkPositiveLogin() {
-        WebDriver driver = new ChromeDriver(); //инициализация браузера (Chrome)
-        driver.manage().window().maximize(); //настройки браузера (максимальный размер открывающегося окна)
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //неявное ожидание (10 секунд на появление элемента на странице)
+        driver.get("https://www.saucedemo.com");
 
-        driver.get("https://www.saucedemo.com"); //получить страницу
-
-        driver.findElement(By.id("user-name")).sendKeys("standard_user"); //ввести логин (локатор id из xtml-файла)
-        driver.findElement(By.id("password")).sendKeys("secret_sauce"); //ввести пароль
-        driver.findElement(By.id("login-button")).click(); //нажать кнопку "Login"
+        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        driver.findElement(By.id("login-button")).click();
 
         boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=title]")).isDisplayed(); //найти уникальный элемент "Products" на странице, "true" - если видно
-
-        Assert.assertTrue(titleIsVisible, "Products"); //сравнить между собой два значения
-        driver.quit();
+        Assert.assertTrue(titleIsVisible, "Products");
     }
 
     /*
@@ -76,10 +77,6 @@ public class LoginTest {
 
     @Test
     public void checkNegativeLoginWithIncorrectLoginAndPassword() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
         driver.get("https://www.saucedemo.com/");
 
         driver.findElement(By.id("user-name")).sendKeys(" Arina");
@@ -88,8 +85,6 @@ public class LoginTest {
 
         String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
         Assert.assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service");
-
-        driver.quit();
     }
 
     /*
@@ -104,20 +99,14 @@ public class LoginTest {
 
     @Test
     public void checkNegativeLoginWithIncorrectPassword() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
         driver.get("https://www.saucedemo.com/");
 
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.id("password")).sendKeys("Katysheva");
         driver.findElement(By.id("login-button")).click();
 
-        String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
-        Assert.assertEquals(errorMessage, "Epic sadface: Username and password do not match any user in this service");
-
-        driver.quit();
+        boolean titleIsVisible = driver.findElement(By.cssSelector("[data-test=error]")).isDisplayed();
+        Assert.assertTrue(titleIsVisible, "Epic sadface: Username and password do not match any user in this service");
     }
 
 /*
@@ -132,10 +121,6 @@ public class LoginTest {
 
     @Test
     public void checkNegativeLoginWithEmptyPassword() {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
         driver.get("https://www.saucedemo.com/");
 
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
@@ -144,7 +129,5 @@ public class LoginTest {
 
         String errorMessage = driver.findElement(By.cssSelector("[data-test=error]")).getText();
         Assert.assertEquals(errorMessage, "Epic sadface: Password is required");
-
-        driver.quit();
     }
 }
