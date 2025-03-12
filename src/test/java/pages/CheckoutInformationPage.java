@@ -1,5 +1,6 @@
 package pages;
 
+import dto.Customer;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,10 +18,10 @@ public class CheckoutInformationPage {
     private static final By CONTINUE_BUTTON = By.id("continue");
 
     @Step("Заполнение формы данными: имя - {firstName}, фамилия - {lastName}, индекс - {zipCode}")
-    public CheckoutInformationPage fillingForm(String firstName, String lastName, String zipCode) {
-        driver.findElement(FIRST_NAME_FIELD).sendKeys(firstName);
-        driver.findElement(LAST_NAME_FIELD).sendKeys(lastName);
-        driver.findElement(ZIP_CODE_FIELD).sendKeys(zipCode);
+    public CheckoutInformationPage fillingForm(Customer customer) {
+        driver.findElement(FIRST_NAME_FIELD).sendKeys(customer.getFirstName());
+        driver.findElement(LAST_NAME_FIELD).sendKeys(customer.getLastName());
+        driver.findElement(ZIP_CODE_FIELD).sendKeys(customer.getZipCode());
         return this;
     }
 

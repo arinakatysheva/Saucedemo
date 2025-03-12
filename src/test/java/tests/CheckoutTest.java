@@ -1,5 +1,6 @@
 package tests;
 
+import dto.Customer;
 import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -20,6 +21,12 @@ public class CheckoutTest extends BaseTest {
        Thank you for your order!
      */
 
+    Customer customer = Customer.builder()
+            .firstName("Ivan")
+            .lastName("Ivanov")
+            .zipCode("123456")
+            .build();
+
     @Test
     @Link("https://www.saucedemo.com")
     @TmsLink("www.testrail.com/SD/SD-01") //тест-кейс №01 в проекте Saucedemo
@@ -38,12 +45,12 @@ public class CheckoutTest extends BaseTest {
                 .addToCart("Sauce Labs Bolt T-Shirt")
                 .clickToCart()
                 .clickToCheckout()
-                .fillingForm("Ivan", "Ivanov", "123456")
+                .fillingForm(customer)
                 .clickToContinue()
                 .clickToFinish();
         assertEquals(completePage.getCompleteMessage(),
                 "Thank you for your order!",
                 "Сообщение о покупке не отобразилось"
-        ); //сообщение о несоотвествии ожидаемого и фактического результатов
+        ); //сообщение о несоответствии ожидаемого и фактического результатов
     }
 }
