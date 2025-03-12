@@ -21,11 +21,7 @@ public class CheckoutTest extends BaseTest {
        Thank you for your order!
      */
 
-    Customer customer = Customer.builder()
-            .firstName("Ivan")
-            .lastName("Ivanov")
-            .zipCode("123456")
-            .build();
+    Customer customer = new Customer("Ivan", "Ivanov", "123456");
 
     @Test
     @Link("https://www.saucedemo.com")
@@ -51,6 +47,6 @@ public class CheckoutTest extends BaseTest {
         assertEquals(completePage.getCompleteMessage(),
                 "Thank you for your order!",
                 "Сообщение о покупке не отобразилось"
-        ); //сообщение о несоответствии ожидаемого и фактического результатов
+        ); //сообщение о несоотвествии ожидаемого и фактического результатов
     }
 }
