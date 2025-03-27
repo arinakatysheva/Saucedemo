@@ -19,7 +19,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest #развернуть на удаленном сервере машину ubuntu
+    runs-on: windows-latest #развернуть на удаленном сервере машину ubuntu
 
     steps:
     - uses: actions/checkout@v4
