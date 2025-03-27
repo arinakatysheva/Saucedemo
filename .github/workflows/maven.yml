@@ -9,15 +9,17 @@
 name: Saucedemo
 
 on:
-  push:
+  push: #реагирует на команду push, которая проходит в main
     branches: [ "main" ]
-  pull_request:
+  pull_request: #реагирует на команду pull request
     branches: [ "main" ]
+  schedule: #запуск по определенному времени
+    - cron: '00 10 * * 5' #время в формате cron (пятизначное число)
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #развернуть на удаленном сервере машину ubuntu
 
     steps:
     - uses: actions/checkout@v4
