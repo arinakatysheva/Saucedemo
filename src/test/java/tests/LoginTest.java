@@ -71,6 +71,16 @@ public class LoginTest extends BaseTest {
         assertTrue(titleIsVisible, "Products");
     }
 
+    // Логирование
+//    @Test
+//    public void test() {
+//        log.fatal("fatal"); //логирование методов, которые могут полностью сломать приложение
+//        log.error("error"); //логирование методов, которые могут привести к ошибке, но не сломать полностью приложение
+//        log.info("info"); //логирование всех методов
+//        log.debug("debug"); //логи для разработчиков
+//        log.trace("trace"); //подробное описание того, что привело к ошибке
+//    }
+
     /*
     Домашнее задание - тест 1
     1.Открыть страницу https://www.saucedemo.com/

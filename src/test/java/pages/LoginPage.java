@@ -1,8 +1,11 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+@Log4j2
 
 public class LoginPage {
     WebDriver driver;
@@ -18,12 +21,14 @@ public class LoginPage {
 
     @Step("Открытие страницы логина") //указываем, что делает метод
     public LoginPage open() {
+        log.info("Открытие страницы логина");
         driver.get("https://www.saucedemo.com"); //метод открытия страницы
         return this; //вернуть страницу авторизации
     }
 
     @Step("Вход в систему с данными пользователя: логин - {user} и пароль {password}")
     public ProductsPage login(String user, String password) { //указываем переменные, которые хотим использовать внутри метода
+        log.info("Вход в систему с данными пользователя {} и пароль {}", user, password);
         driver.findElement(USER_FIELD).sendKeys(user);
         driver.findElement(PASSWORD_FIELD).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
@@ -31,7 +36,8 @@ public class LoginPage {
     }
 
     @Step("Вход в систему с данными пользователя: логин - {user} и пароль {password}")
-    public LoginPage loginForNegativeData(String user, String password) { //указываем переменные, которые хотим использовать внутри метода
+    public LoginPage loginForNegativeData(String user, String password) {
+        log.info("Вход в систему с данными пользователя {} и пароль {}", user, password);
         driver.findElement(USER_FIELD).sendKeys(user);
         driver.findElement(PASSWORD_FIELD).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
@@ -39,6 +45,7 @@ public class LoginPage {
     }
 
     public String getErrorMessage() {
+        log.info("Получение сообщения об ошибке");
         return driver.findElement(ERROR_MESSAGE).getText(); //возвращаем строку ошибки
     }
 }
